@@ -17,20 +17,44 @@ public class Config extends EnumStateMachineConfigurerAdapter<States, Events> {
             throws Exception {
         states
                 .withStates()
-                .initial(States.STATE1)
+                .initial(States.STATE2)
                 .states(EnumSet.allOf(States.class));
     }
 
     @Override
     public void configure(StateMachineTransitionConfigurer<States, Events> transitions)
             throws Exception {
+        //configureStateOne(transitions);
+        //configureStateTwo(transitions);
+    }
+
+    private void configureStateOne(StateMachineTransitionConfigurer<States, Events> transitions) throws Exception {
         transitions
                 .withExternal()
                 .source(States.STATE1).target(States.STATE2)
                 .event(Events.EVENT1)
+                .action(new EventOneAction())
+
                 .and()
+
                 .withExternal()
                 .source(States.STATE2).target(States.STATE1)
-                .event(Events.EVENT2);
+                .event(Events.EVENT2)
+                .action(new EventTwoAction());
+    }
+
+    private void configureStateTwo(StateMachineTransitionConfigurer<States, Events> transitions) throws Exception {
+        transitions
+                .withExternal()
+                .source(States.STATE2).target(States.STATE1)
+                .event(Events.EVENT2)
+                .action(new EventTwoAction())
+
+                .and()
+
+                .withExternal()
+                .source(States.STATE1).target(States.STATE2)
+                .event(Events.EVENT1)
+                .action(new EventOneAction());
     }
 }

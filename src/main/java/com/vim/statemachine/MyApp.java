@@ -9,6 +9,7 @@ public class MyApp {
     StateMachine<States, Events> stateMachine;
 
     void doSignals() {
+        //StateMachine<States, Events> stateMachine = smBuilder.buildMachine();
         stateMachine.start();
         stateMachine.sendEvent(Events.EVENT1);
         stateMachine.sendEvent(Events.EVENT2);
